@@ -68,3 +68,14 @@ searchButton.addEventListener("click", () => {
     curSelectedNav?.classList.remove("active");
     curSelectedNav = null;
 });
+//here we adding the functionllity to press the enter to show the result
+document.addEventListener('keydown', function(event) {
+  if (event.keyCode === 13) {
+    const query = searchText.value;
+    if (!query) return;
+    fetchNews(query);
+    curSelectedNav?.classList.remove("active");
+    curSelectedNav = null;
+
+  }
+  });
