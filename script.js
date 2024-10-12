@@ -2,7 +2,8 @@
 const API_KEY = "2d854b40f9c840bc888f96b704655528";
 const url = "https://newsapi.org/v2/everything?q=";
 
-window.addEventListener("load", () => fetchNews("India"));
+const bd = document.querySelector("body");
+window.addEventListener("load", () => fetchNews("Jharkhand"));
 
 function reload() {
     window.location.reload();
@@ -16,6 +17,12 @@ async function fetchNews(query) {
 
 function bindData(articles) {
     const cardsContainer = document.getElementById("cards-container");
+    // If we  search and there is no such news then it shows
+     if (articles.length === 0) {
+        cardsContainer.innerHTML = `<h2>Opps ...</h2><h1> No news found for the given query.<h1/>`;
+        bd.style.backgroundColor = "pink"
+        return;
+      }
     const newsCardTemplate = document.getElementById("template-news-card");
 
     cardsContainer.innerHTML = "";
