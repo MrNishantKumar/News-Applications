@@ -2,11 +2,14 @@
 const API_KEY = "2d854b40f9c840bc888f96b704655528";
 const url = "https://newsapi.org/v2/everything?q=";
 
-window.addEventListener("load", () => fetchNews("India"));
+
+const bd = document.querySelector("body");
+window.addEventListener("load", () => fetchNews("Jharkhand"));
 
 function reload() {
     window.location.reload();
 }
+
 
 async function fetchNews(query) {
     const res = await fetch(`${url}${query}&apiKey=${API_KEY}`);
@@ -16,6 +19,12 @@ async function fetchNews(query) {
 
 function bindData(articles) {
     const cardsContainer = document.getElementById("cards-container");
+     
+    if (articles.length === 0) {
+        cardsContainer.innerHTML = `<h2> Sorry...</h2><h1> No news found for the given query.<h1/>`;
+        bd.style.backgroundColor = "pink"
+        return;
+      }
     const newsCardTemplate = document.getElementById("template-news-card");
 
     cardsContainer.innerHTML = "";
@@ -68,3 +77,41 @@ searchButton.addEventListener("click", () => {
     curSelectedNav?.classList.remove("active");
     curSelectedNav = null;
 });
+// adding functionallity to  the enter button
+document.addEventListener('keydown', function(event) {
+   if (event.keyCode === 13) {
+    const query = searchText.value;
+    if (!query) return;
+    fetchNews(query);
+    curSelectedNav?.classList.remove("active");
+    curSelectedNav = null;
+  }
+  });
+
+  //for backgroud change 
+
+// const btn = document.querySelector("#btn");
+// btn.addEventListener("click", () => {
+//      const colors = ["#ffe5ec", "#ffc2d1", "#ffb3c6", "#ff8fab", "#edede9", "#fb6f92"];
+//     // const colors = ["#313336","#3c3f41"];
+//     const randomIndex = Math.round(Math.random() * colors.length);
+//     document.querySelector("body").style.backgroundColor = colors[randomIndex];   
+//     document.querySelector("nav").style.backgroundColor = colors[randomIndex+1];   
+  
+//   });
+
+// color theme change
+
+  const themeToggle = document.getElementById('theme-toggle');
+  const body = document.body;
+  const nav = document.getElementById("nav-light-theme")
+  
+  themeToggle.addEventListener('click', () => {
+    body.classList.toggle('dark-theme');
+    body.classList.toggle('light-theme');
+  });
+  
+  nav.addEventListener('click', () => {
+    body.classList.toggle('dark-nav-theme');
+    body.classList.toggle('light-nav-theme');   
+  });
